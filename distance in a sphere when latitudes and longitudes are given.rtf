@@ -1,0 +1,89 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 AppleSymbols;\f2\fnil\fcharset0 Monaco;
+\f3\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red12\green99\blue146;
+\red0\green0\blue0;\red14\green107\blue1;\red245\green245\blue245;\red10\green65\blue216;\red151\green0\blue255;
+\red83\green83\blue83;\red171\green16\blue27;\red246\green246\blue239;\red25\green27\blue31;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0\c70196;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c46667\c63922;
+\cssrgb\c0\c0\c0\c40000;\cssrgb\c0\c48235\c0;\cssrgb\c96863\c96863\c96863;\cssrgb\c1961\c35686\c87843;\cssrgb\c66667\c13333\c100000;
+\cssrgb\c40000\c40000\c40000;\cssrgb\c73333\c13725\c13725;\cssrgb\c97255\c97255\c94902;\cssrgb\c12941\c14118\c16471;}
+\margl1440\margr1440\vieww17900\viewh13720\viewkind0
+\deftab720
+\pard\pardeftab720\sl460\sa240\partightenfactor0
+
+\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 We can calulate the distance in a sphere when latitudes and longitudes are given by\'a0{\field{\*\fldinst{HYPERLINK "https://en.wikipedia.org/wiki/Haversine_formula"}}{\fldrslt \cf4 \strokec4 Haversine formula}}\cb1 \
+\pard\pardeftab720\sl460\sa320\partightenfactor0
+
+\b \cf2 \cb3 haversine(\uc0\u952 ) = sin\'b2(\u952 /2)
+\b0 \cb1 \
+\pard\pardeftab720\sl460\sa320\partightenfactor0
+\cf2 \cb3 Eventually, the formual boils down to the following where \uc0\u966  is latitude, \u955  is longitude, R is earth\'92s radius (mean radius = 6,371km) to include latitude and longitude coordinates (A and B in this case).\cb1 \
+\pard\pardeftab720\sl460\sa320\partightenfactor0
+
+\b \cf2 \cb3 a = sin\'b2((\uc0\u966 B - \u966 A)/2) + cos \u966 A . cos \u966 B . sin\'b2((\u955 B - \u955 A)/2)
+\b0 \cb1 \
+
+\b \cb3 c = 2 * atan2( \uc0\u8730 a, \u8730 (1\u8722 a) )
+\b0 \cb1 \
+
+\b \cb3 d = R 
+\f1\b0 \uc0\u8901 
+\f0\b  c
+\b0 \cb1 \
+
+\b \cb3 d = Haversine distance
+\b0 \cb1 \
+\pard\pardeftab720\sl460\sa320\partightenfactor0
+
+\i \cf2 \cb3 Refer\'a0{\field{\*\fldinst{HYPERLINK "https://community.esri.com/groups/coordinate-reference-systems/blog/2017/10/05/haversine-formula"}}{\fldrslt \cf4 \strokec4 this}}\'a0page for more info and examples on Haversine formula\
+https://community.esri.com/groups/coordinate-reference-systems/blog/2017/10/05/haversine-formula
+\i0 \cb1 \
+\pard\pardeftab720\sl408\qr\partightenfactor0
+
+\f2\fs24 \cf5 \strokec5 In\'a0[42]:\
+\pard\pardeftab720\sl460\partightenfactor0
+
+\fs28 \cf6 \cb7 \strokec6 def\cf2 \strokec2  haversine_distance(lat1, long1, lat2, long2):\
+    data \cf8 \strokec8 =\cf2 \strokec2  [train, test]\
+    \cf6 \strokec6 for\cf2 \strokec2  i \cf9 \strokec9 in\cf2 \strokec2  data:\
+        R \cf8 \strokec8 =\cf2 \strokec2  \cf10 \strokec10 6371\cf2 \strokec2   \cf5 \strokec5 #radius of earth in kilometers\cf2 \strokec2 \
+        \cf5 \strokec5 #R = 3959 #radius of earth in miles\cf2 \strokec2 \
+        phi1 \cf8 \strokec8 =\cf2 \strokec2  np\cf8 \strokec8 .\cf2 \strokec2 radians(i[lat1])\
+        phi2 \cf8 \strokec8 =\cf2 \strokec2  np\cf8 \strokec8 .\cf2 \strokec2 radians(i[lat2])\
+    \
+        delta_phi \cf8 \strokec8 =\cf2 \strokec2  np\cf8 \strokec8 .\cf2 \strokec2 radians(i[lat2]\cf8 \strokec8 -\cf2 \strokec2 i[lat1])\
+        delta_lambda \cf8 \strokec8 =\cf2 \strokec2  np\cf8 \strokec8 .\cf2 \strokec2 radians(i[long2]\cf8 \strokec8 -\cf2 \strokec2 i[long1])\
+    \
+        \cf5 \strokec5 #a = sin\'b2((
+\f3 \uc0\u966 
+\f2 B - 
+\f3 \uc0\u966 
+\f2 A)/2) + cos 
+\f3 \uc0\u966 
+\f2 A . cos 
+\f3 \uc0\u966 
+\f2 B . sin\'b2((
+\f3 \uc0\u955 
+\f2 B - 
+\f3 \uc0\u955 
+\f2 A)/2)\cf2 \strokec2 \
+        a \cf8 \strokec8 =\cf2 \strokec2  np\cf8 \strokec8 .\cf2 \strokec2 sin(delta_phi \cf8 \strokec8 /\cf2 \strokec2  \cf10 \strokec10 2.0\cf2 \strokec2 ) \cf8 \strokec8 **\cf2 \strokec2  \cf10 \strokec10 2\cf2 \strokec2  \cf8 \strokec8 +\cf2 \strokec2  np\cf8 \strokec8 .\cf2 \strokec2 cos(phi1) \cf8 \strokec8 *\cf2 \strokec2  np\cf8 \strokec8 .\cf2 \strokec2 cos(phi2) \cf8 \strokec8 *\cf2 \strokec2  np\cf8 \strokec8 .\cf2 \strokec2 sin(delta_lambda \cf8 \strokec8 /\cf2 \strokec2  \cf10 \strokec10 2.0\cf2 \strokec2 ) \cf8 \strokec8 **\cf2 \strokec2  \cf10 \strokec10 2\cf2 \strokec2 \
+    \
+        \cf5 \strokec5 #c = 2 * atan2( \uc0\u8730 a, \u8730 (1\u8722 a) )\cf2 \strokec2 \
+        c \cf8 \strokec8 =\cf2 \strokec2  \cf10 \strokec10 2\cf2 \strokec2  \cf8 \strokec8 *\cf2 \strokec2  np\cf8 \strokec8 .\cf2 \strokec2 arctan2(np\cf8 \strokec8 .\cf2 \strokec2 sqrt(a), np\cf8 \strokec8 .\cf2 \strokec2 sqrt(\cf10 \strokec10 1\cf8 \strokec8 -\cf2 \strokec2 a))\
+    \
+        \cf5 \strokec5 #d = R*c\cf2 \strokec2 \
+        d \cf8 \strokec8 =\cf2 \strokec2  (R \cf8 \strokec8 *\cf2 \strokec2  c) \cf5 \strokec5 #in kilometers\cf2 \strokec2 \
+        i[\cf11 \strokec11 'H_Distance'\cf2 \strokec2 ] \cf8 \strokec8 =\cf2 \strokec2  d\
+    \cf6 \strokec6 return\cf2 \strokec2  d\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0\fs24 \cf12 \cb13 \strokec12 Output\
+\pard\pardeftab720\sl408\qr\partightenfactor0
+
+\f2 \cf5 \cb1 \strokec5 In\'a0[43]:\
+\pard\pardeftab720\sl460\partightenfactor0
+
+\fs28 \cf2 \cb7 \strokec2 haversine_distance(\cf11 \strokec11 'pickup_latitude'\cf2 \strokec2 , \cf11 \strokec11 'pickup_longitude'\cf2 \strokec2 , \cf11 \strokec11 'dropoff_latitude'\cf2 \strokec2 , \cf11 \strokec11 'dropoff_longitude'\cf2 \strokec2 )\cb1 \
+}
